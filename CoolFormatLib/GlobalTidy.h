@@ -27,7 +27,7 @@ public:
 	 * 初始化全局格式化参数
 	 * @return void 
 	 */
-	void InitGlobalTidy(const std::string &strDllPath);
+    void InitGlobalTidy(const std::string &strDllPath, const std::string &strConfigPath);
 
 	bool m_bTidySyn[SYN_XML + 1];
 
@@ -58,15 +58,18 @@ public:
 	/** SqlFormatter选项类 */
 	std::string m_TidySql;
 
+    /** VerilogFormatterLib选项类 */
+    std::string m_TidyVerilog;
+
 	/** 默认的语言结构体数组 */
 	static TidyDeafult m_TidyNames[MAX_SYN_LANG];
 
 private:
-	bool LoadGlobalTidy(const std::string &strDllPath);
+    bool LoadGlobalTidy(const std::string &strDllPath, const std::string &strConfigPath);
 
 	bool LoadFromReg();
 
-	bool LoadFromFile(const std::string &strDllPath);
+    bool LoadFromFile(const std::string &strDllPath, const std::string &strConfigPath);
 };
 
 extern GlobalTidy g_GlobalTidy;

@@ -7,6 +7,7 @@
 #include "CFPhpTidy.h"
 #include "CFHtmlTidy.h"
 #include "CFCppTidy.h"
+#include "CFVerilogTidy.h"
 #include "SynLanguage.h"
 #include "StrUseful.h"
 #include "GlobalTidy.h"
@@ -104,6 +105,14 @@ bool CFormatterHelp::DoFormatter(unsigned int nLanguage, const std::string &strT
 		strTidy = (g_GlobalTidy.m_TidySql);
 	}
 	break;
+    case SYN_VERILOG:
+    {
+        pTidy = new CCFVerilogTidy();
+        std::string strNewTidy(g_GlobalTidy.m_TidyVerilog);
+        strNewTidy = strreplace_all(strNewTidy, "-", " -");
+        strTidy = (strNewTidy);
+    }
+    break;
 	default:
         return false;
 	}

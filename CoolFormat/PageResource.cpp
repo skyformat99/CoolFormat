@@ -55,7 +55,8 @@ BOOL CPageResource::OnInitDialog()
 {
 	CBCGPPropertyPage::OnInitDialog();
 
-	InitLang();
+    SendMessageToDescendants(WM_SETFONT, (WPARAM)globalData.fontRegular.m_hObject, MAKELPARAM(FALSE, 0), FALSE);
+    InitLang();
 
 	return TRUE;  // return TRUE unless you set the focus to a control
 	// 异常: OCX 属性页应返回 FALSE
@@ -67,11 +68,13 @@ void CPageResource::InitLang()
 	BOOL bNameVaild = strTemp.LoadString(IDS_STRING_RES_UPDATE);
 	ASSERT(bNameVaild);
 	SetDlgItemText(IDC_STATIC_RESUPDATE, strTemp);
+	SetDlgItemSizeToContent(GetDlgItem(IDC_STATIC_RESUPDATE));
 
 	bNameVaild = strTemp.LoadString(IDS_STRING_RES_LINKEME);
 	ASSERT(bNameVaild);
 	SetDlgItemText(IDC_STATIC_LINKME, strTemp);
 	SetDlgItemText(IDC_BUTTON_LINKME, strTemp);
+	SetDlgItemSizeToContent(GetDlgItem(IDC_STATIC_LINKME));
 
 	bNameVaild = strTemp.LoadString(IDS_STRING_RES_TITLE);
 	ASSERT(bNameVaild);
@@ -84,6 +87,7 @@ void CPageResource::InitLang()
 	bNameVaild = strTemp.LoadString(IDS_STRING_RES_ABOUTLB);
 	ASSERT(bNameVaild);
 	SetDlgItemText(IDC_STATIC_ABOUT, strTemp);
+	SetDlgItemSizeToContent(GetDlgItem(IDC_STATIC_ABOUT));
 
 	bNameVaild = strTemp.LoadString(IDS_STRING_RES_ABOUT);
 	ASSERT(bNameVaild);

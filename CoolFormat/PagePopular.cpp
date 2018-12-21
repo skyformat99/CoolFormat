@@ -49,7 +49,8 @@ BOOL CPagePopular::OnInitDialog()
 {
 	CBCGPPropertyPage::OnInitDialog();
 
-	InitLang();
+    SendMessageToDescendants(WM_SETFONT, (WPARAM)globalData.fontRegular.m_hObject, MAKELPARAM(FALSE, 0), FALSE);
+    InitLang();
 
 	m_nColorStyle = theApp.m_nAppLook - ID_VIEW_APPLOOK_2010_1;
 
@@ -108,10 +109,12 @@ void CPagePopular::InitLang()
 	BOOL bNameVaild = strTemp.LoadString(IDS_STRING_POPULARCOLOR);
 	ASSERT(bNameVaild);
 	SetDlgItemText(IDC_STATIC_STYLECOLOR, strTemp);
+	SetDlgItemSizeToContent(GetDlgItem(IDC_STATIC_STYLECOLOR));
 
 	bNameVaild = strTemp.LoadString(IDS_STRING_POPULARSCREEN);
 	ASSERT(bNameVaild);
 	SetDlgItemText(IDC_STATIC_STYLESCREEN, strTemp);
+	SetDlgItemSizeToContent(GetDlgItem(IDC_STATIC_STYLESCREEN));
 
 	bNameVaild = strTemp.LoadString(IDS_STRING_POPULARTITLE);
 	ASSERT(bNameVaild);
@@ -120,6 +123,7 @@ void CPagePopular::InitLang()
 	bNameVaild = strTemp.LoadString(IDS_STRING_POPULARLANG);
 	ASSERT(bNameVaild);
 	SetDlgItemText(IDC_STATIC_STYLELANG, strTemp);
+	SetDlgItemSizeToContent(GetDlgItem(IDC_STATIC_STYLELANG));
 
 	bNameVaild = strTemp.LoadString(IDS_STRING_POPULARCOLORSTR);
 	ASSERT(bNameVaild);

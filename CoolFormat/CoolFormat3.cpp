@@ -177,7 +177,6 @@ int CCoolFormat3App::ExitInstance()
 	WriteInt(_T("ShowToolTipDescr"), m_bShowToolTipDescr);
 	WriteInt(_T("ApplicationLanguage"), m_nAppLanguageID);
 	WriteInt(_T("SynLanguage"), m_nSynLanguage);
-	WriteInt(_T("BatchLanguage"), m_nBatchSyn);
 	WriteInt(_T("LastCheckUpdate"), m_nLastCheckUpdate);
 	WriteString(_T("LastNewVersion"), m_strNewVersion);
 	BCGCBProCleanUp();
@@ -276,7 +275,6 @@ void CCoolFormat3App::LoadReg()
 	m_bShowToolTipDescr = GetInt (_T("ShowToolTipDescr"), TRUE);
 	m_nAppLanguageID = GetInt(_T("ApplicationLanguage"), 0);
 	m_nSynLanguage = GetInt(_T("SynLanguage"), SYN_NORMALTEXT);
-	m_nBatchSyn = GetInt(_T("BatchLanguage"), 0);
 	m_nLastCheckUpdate = GetInt(_T("LastCheckUpdate"), 0);
 	m_strNewVersion = GetString(_T("LastNewVersion"));
 	g_GlobalUtils.InitGlobalUtilsFrist();
@@ -443,22 +441,27 @@ BOOL CAboutDlg::OnInitDialog()
 {
 	CBCGPDialog::OnInitDialog();
 
+	SendMessageToDescendants(WM_SETFONT, (WPARAM)globalData.fontRegular.m_hObject, MAKELPARAM(FALSE, 0), FALSE);
+
 	CString strTemp;
 	BOOL bNameVaild = strTemp.LoadString(IDS_STRING_ABOUTDESC);
 	ASSERT(bNameVaild);
-	SetDlgItemText(IDC_STATIC_ABOUT, strTemp);
+	//SetDlgItemText(IDC_STATIC_ABOUT, strTemp);
+	//SetDlgItemSizeToContent(GetDlgItem(IDC_STATIC_ABOUT));
 
 	bNameVaild = strTemp.LoadString(IDS_STRING_WUHUAN);
 	ASSERT(bNameVaild);
 	SetDlgItemText(IDC_STATIC_WUHUAN, strTemp);
+	SetDlgItemSizeToContent(GetDlgItem(IDC_STATIC_WUHUAN));
 
 	bNameVaild = strTemp.LoadString(IDOK);
 	ASSERT(bNameVaild);
-	SetDlgItemText(IDOK, strTemp);
+	//SetDlgItemText(IDOK, strTemp);
 
 	bNameVaild = strTemp.LoadString(IDS_STRING_VERSION);
 	ASSERT(bNameVaild);
 	SetDlgItemText(IDC_STATIC_VERSION, strTemp);
+	SetDlgItemSizeToContent(GetDlgItem(IDC_STATIC_VERSION));
 
 	bNameVaild = strTemp.LoadString(IDS_STRING_RES_ABOUTLB);
 	ASSERT(bNameVaild);

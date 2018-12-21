@@ -11,14 +11,14 @@ TidyDeafult GlobalTidy::m_TidyNames[MAX_SYN_LANG] = {
     {"AutoHotkey",                  ("*.ahk;*.ia;*.scriptlet;*.hkml;"),														SYN_AUTOHOTKEY},
     {"AutoIt",                      ("*.au3;"),																				SYN_AUTOIT},
     {"Batch",						("*.bat;*.cmd;*.nt;"),																	SYN_BATCH},
-    {"COBO",						("*.cbl;*.cbd;*.cdb;*.cdc;*.cob;"),														SYN_COBOL},
+    {"COBOL",						("*.cbl;*.cbd;*.cdb;*.cdc;*.cob;"),														SYN_COBOL},
     {"C++",							("-A1-p-N-Y-k3"),																			SYN_CPP},
     {"C#",                          ("-A1-p-N-Y-k3"),																			SYN_CS},
     {"CSS",							("-c2-rub-cl0-os1-cc-cf-cfp0-rs2"),														SYN_CSS},
     {"D",							("*.d;"),																					SYN_D},
     {"Fortran",						("*.f;*.for;*.f90;*.f95;*.f2k;"),															SYN_FORTRAN},
-    {"Haskel",						("*.hs;*.lhs;*.las;"),																	SYN_HASKELL},
-    {"HTM",							("-aan-dep-fb-fbc-fu-js-ll-n-ox-pe-qa-qn-m-wa-wj-wp-ws-sw-fo-i0-d1-ce0-ie0-oe0-w0-sbo0"),	SYN_HTML},
+    {"Haskell",						("*.hs;*.lhs;*.las;"),																	SYN_HASKELL},
+    {"HTML",							("-aan-dep-fb-fbc-fu-js-ll-n-ox-pe-qa-qn-m-wa-wj-wp-ws-sw-fo-i0-d1-ce0-ie0-oe0-w0-sbo0"),	SYN_HTML},
     {"INI",							("*.ini;*.inf;*.reg;*.url;"),																SYN_INI},
     {"Java",						("-A1-p-N-Y-k3"),																			SYN_JAVA},
     {"JavaScript",                  ("-nb-cn4"),																				SYN_JAVASCRIPT},
@@ -28,16 +28,16 @@ TidyDeafult GlobalTidy::m_TidyNames[MAX_SYN_LANG] = {
     {"LUA",							("*.lua;"),																				SYN_LUA},
     {"NormalText",                  ("*.txt;"),																				SYN_NORMALTEXT},
     {"Objective-C",					("-A1-p-N-Y-k3"),																			SYN_OBJECTIVEC},
-    {"Pasca",						("*.dpr;*.dpk;*.pas;*.dfm;*.inc;*.pp;"),													SYN_PASCAL},
-    {"Per",							("*.pl;*.pm;*.plx;"),																		SYN_PERL},
-    {"PHP",							("-sas-icd-samt-salo-saeo-saro-sabo-saao-samp-aas-rsl-iel-rpc-rst-st"),					SYN_PHP},
+    {"Pascal",						("*.dpr;*.dpk;*.pas;*.dfm;*.inc;*.pp;"),													SYN_PASCAL},
+    {"Perl",							("*.pl;*.pm;*.plx;"),																		SYN_PERL},
+    {"PHP",							("-sas-icd-samt-salo-saeo-saro-sabo-saao-samp-aas-rsl-iel-rpc-rst-st"),					    SYN_PHP},
     {"Python",                      ("*.py;*.pyw;"),																			SYN_PYTHON},
     {"Ruby",						("*.rb;*.rbw;"),																			SYN_RUBY},
-    {"SQ",							("-cn2-el-ml0"),																			SYN_SQL},
+    {"SQL",							("-cn2-el-ml0"),																			SYN_SQL},
     {"VB",                          ("*.vb;*.bas;*.frm;*.cls;*.ctl;*.pag;*.dsr;*.dob;*.vbs;*.dsm;*.vbp;*.vbg;*.mak;*.vbw;"),	SYN_VB},
-    {"Verilog",						("*.v;*.vl;*.vmd;"),																		SYN_VERILOG},
-    {"VHD",							("*.vhd;*.vhdl;*.vho;"),																	SYN_VHDL},
-    {"XM",							("-aan-dep-fb-fbc-js-ll-n-ix-qa-qn-m-wa-wj-wp-ws-sw-fo-i1-ce0-ie0-oe0-w0"),				SYN_XML}
+    {"Verilog",						("-A1"),																		            SYN_VERILOG},
+    {"VHDL",							("*.vhd;*.vhdl;*.vho;"),																	SYN_VHDL},
+    {"XML",							("-aan-dep-fb-fbc-js-ll-n-ix-qa-qn-m-wa-wj-wp-ws-sw-fo-i1-ce0-ie0-oe0-w0"),				    SYN_XML}
 };
 
 GlobalTidy g_GlobalTidy;
@@ -50,7 +50,7 @@ GlobalTidy::~GlobalTidy(void)
 {
 }
 
-void GlobalTidy::InitGlobalTidy(const std::string &strDllPath)
+void GlobalTidy::InitGlobalTidy(const std::string &strDllPath, const std::string &strConfigPath)
 {
 	for(int i = 0; i <= SYN_XML; ++i)
 	{
@@ -67,6 +67,7 @@ void GlobalTidy::InitGlobalTidy(const std::string &strDllPath)
     m_bTidySyn[SYN_CSS] = true;
     m_bTidySyn[SYN_JSON] = true;
     m_bTidySyn[SYN_SQL] = true;
+    m_bTidySyn[SYN_VERILOG] = true;
 
 	m_TidyCpp = m_TidyNames[SYN_CPP].tidyName;
 	m_TidyJava = m_TidyNames[SYN_JAVA].tidyName;
@@ -78,14 +79,15 @@ void GlobalTidy::InitGlobalTidy(const std::string &strDllPath)
 	m_TidyJs = m_TidyNames[SYN_JAVASCRIPT].tidyName;
 	m_TidyCss = m_TidyNames[SYN_CSS].tidyName;
 	m_TidyJson = m_TidyNames[SYN_JSON].tidyName;
-	m_TidySql = m_TidyNames[SYN_SQL].tidyName;
-	LoadGlobalTidy(strDllPath);
+    m_TidySql = m_TidyNames[SYN_SQL].tidyName;
+    m_TidyVerilog = m_TidyNames[SYN_VERILOG].tidyName;
+    LoadGlobalTidy(strDllPath, strConfigPath);
 }
 
-bool GlobalTidy::LoadGlobalTidy(const std::string &strDllPath)
+bool GlobalTidy::LoadGlobalTidy(const std::string &strDllPath, const std::string &strConfigPath)
 {
 #ifdef USE_LOCAL_CONFIG_FILE
-	return LoadFromFile(strDllPath);
+    return LoadFromFile(strDllPath, strConfigPath);
 #else
 	return LoadFromReg();
 #endif
@@ -192,6 +194,11 @@ bool GlobalTidy::LoadFromReg()
 			m_TidySql = strTidy;
 		}
 
+        if (readKey(m_TidyNames[SYN_VERILOG].langName, strTidy))
+        {
+            m_TidyVerilog = strTidy;
+        }
+
 		RegCloseKey(hKEY);
 		return true;
 	}
@@ -199,16 +206,23 @@ bool GlobalTidy::LoadFromReg()
 	return false;
 }
 
-bool GlobalTidy::LoadFromFile(const std::string &strDllPath)
+bool GlobalTidy::LoadFromFile(const std::string &strDllPath, const std::string &strConfigPath)
 {
     std::string strFileName(strDllPath);
-    std::string::size_type pos = strFileName.rfind('/');
-	if (pos == std::string::npos)
-	{
-		return false;
-	}
-	strFileName.erase(pos);
-    strFileName.append("/CoolFormatConfig.cfconfig");
+    if (strConfigPath.empty())
+    {
+        std::string::size_type pos = strFileName.rfind('/');
+        if (pos == std::string::npos)
+        {
+            return false;
+        }
+        strFileName.erase(pos);
+        strFileName.append("/CoolFormatConfig.cfconfig");
+    }
+    else
+    {
+        strFileName = strConfigPath;
+    }
 
 	std::ifstream configFile(strFileName);
 	if (configFile.is_open())
@@ -252,7 +266,7 @@ bool GlobalTidy::LoadFromFile(const std::string &strDllPath)
 					{
 						m_TidyCss = strTidy;
 					}
-					else if (strLang == "HTM")
+					else if (strLang == "HTML")
 					{
 						m_TidyHtml = strTidy;
 					}
@@ -276,14 +290,18 @@ bool GlobalTidy::LoadFromFile(const std::string &strDllPath)
 					{
 						m_TidyPhp = strTidy;
 					}
-					else if (strLang == "SQ")
+					else if (strLang == "SQL")
 					{
 						m_TidySql = strTidy;
 					}
-					else if (strLang == "XM")
+					else if (strLang == "XML")
 					{
 						m_TidyXml = strTidy;
 					}
+                    else if (strLang == "Verilog")
+                    {
+                        m_TidyVerilog = strTidy;
+                    }
 				}
 			}
 		}

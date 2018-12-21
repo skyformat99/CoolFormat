@@ -1,0 +1,117 @@
+{
+	"name": "vscode-coolformat",
+	"displayName": "CoolFormat",
+	"description": "A VSCode plugin for Source Code Formatter",
+	"version": "0.0.1",
+	"publisher": "WuHuan",
+	"engines": {
+		"vscode": "^1.18.0"
+	},
+	"categories": [
+		"Formatters"
+	],
+	"activationEvents": [
+		"*"
+	],
+	"main": "./extension",
+	"contributes": {
+		"configuration": {
+			"type": "object",
+			"title": "CoolFormat configuration",
+			"properties": {
+				"coolformat.executable": {
+					"type": "string",
+					"default": "coolformat",
+					"description": "coolformat executable path"
+				},
+				"coolformat.coolformatrc": {
+					"type": [
+						"string",
+						"null"
+					],
+					"default": null,
+					"description": "coolformat config path"
+				},
+				"coolformat.c.enable": {
+					"type": "boolean",
+					"default": true,
+					"description": "enable C formatting"
+				},
+				"coolformat.cpp.enable": {
+					"type": "boolean",
+					"default": true,
+					"description": "enable C++ formatting"
+				},
+				"coolformat.csharp.enable": {
+					"type": "boolean",
+					"default": false,
+					"description": "enable C# formatting"
+				},
+				"coolformat.css.enable": {
+					"type": "boolean",
+					"default": false,
+					"description": "enable CSS formatting"
+				},
+				"coolformat.html.enable": {
+					"type": "boolean",
+					"default": false,
+					"description": "enable HTML formatting"
+				},
+				"coolformat.java.enable": {
+					"type": "boolean",
+					"default": false,
+					"description": "enable Java formatting"
+				},
+				"coolformat.javascript.enable": {
+					"type": "boolean",
+					"default": false,
+					"description": "enable JavaScript formatting"
+				},
+				"coolformat.json.enable": {
+					"type": "boolean",
+					"default": false,
+					"description": "enable JSON formatting"
+				},
+				"coolformat.objective-c.enable": {
+					"type": "boolean",
+					"default": false,
+					"description": "enable Object-C formatting"
+				},
+				"coolformat.objective-cpp.enable": {
+					"type": "boolean",
+					"default": false,
+					"description": "enable Objective-C++ formatting"
+				},
+				"coolformat.php.enable": {
+					"type": "boolean",
+					"default": false,
+					"description": "enable PHP formatting"
+				},
+				"coolformat.sql.enable": {
+					"type": "boolean",
+					"default": false,
+					"description": "enable SQL formatting"
+				},
+				"coolformat.xml.enable": {
+					"type": "boolean",
+					"default": false,
+					"description": "enable XML formatting"
+				}
+			}
+		}
+	},
+	"scripts": {
+		"postinstall": "node ./node_modules/vscode/bin/install",
+		"test": "node ./node_modules/vscode/bin/test"
+	},
+	"dependencies": {
+		"diff-match-patch": "^1.0.0"
+	},
+	"devDependencies": {
+		"typescript": "^2.6.1",
+		"vscode": "^1.1.6",
+		"eslint": "^4.6.1",
+		"@types/node": "^7.0.43",
+		"@types/mocha": "^2.2.42"
+	}
+}

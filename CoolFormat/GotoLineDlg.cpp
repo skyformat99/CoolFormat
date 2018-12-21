@@ -34,7 +34,8 @@ BOOL CGotoLineDlg::OnInitDialog()
 {
 	CBCGPDialog::OnInitDialog();
 
-	InitLang();
+    SendMessageToDescendants(WM_SETFONT, (WPARAM)globalData.fontRegular.m_hObject, MAKELPARAM(FALSE, 0), FALSE);
+    InitLang();
 
 	if (!IsVisualManagerStyle())
 	{
@@ -65,4 +66,5 @@ void CGotoLineDlg::InitLang()
 	strTip.Format(strTemp, m_nMaxLine);
 	GetDlgItem(IDC_LINETIP)->SetWindowText(strTip);
 	GetDlgItem(IDC_LINE)->SetFocus();
+	SetDlgItemSizeToContent(GetDlgItem(IDC_LINETIP));
 }

@@ -37,6 +37,7 @@ END_MESSAGE_MAP()
 BOOL CSetSheet::OnInitDialog()
 {
 	CBCGPPropertySheet::OnInitDialog();
+    SendMessageToDescendants(WM_SETFONT, (WPARAM)globalData.fontRegular.m_hObject, MAKELPARAM(FALSE, 0), FALSE);
 
 	CRect rc;
 	GetClientRect(&rc);
@@ -49,6 +50,7 @@ BOOL CSetSheet::OnInitDialog()
 	ASSERT(bNameVaild);	
 	m_btnDefaultLink.Create(strTemp, WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, rc, this, IDC_SETSHEET_DEFAULT);
 	m_btnDefaultLink.SizeToContent();
+    m_btnDefaultLink.SetFont(&globalData.fontRegular);
 
 	bNameVaild = strTemp.LoadString(IDOK);
 	ASSERT(bNameVaild);
@@ -82,7 +84,8 @@ BOOL CSetSheet::PreTranslateMessage(MSG* pMsg)
 				g_GlobalTidy.m_TidyJs = g_GlobalTidy.m_TidyNames[SYN_JAVASCRIPT].tidyName;
 				g_GlobalTidy.m_TidyCss = g_GlobalTidy.m_TidyNames[SYN_CSS].tidyName;
 				g_GlobalTidy.m_TidyJson = g_GlobalTidy.m_TidyNames[SYN_JSON].tidyName;
-				g_GlobalTidy.m_TidySql = g_GlobalTidy.m_TidyNames[SYN_SQL].tidyName;
+                g_GlobalTidy.m_TidySql = g_GlobalTidy.m_TidyNames[SYN_SQL].tidyName;
+                g_GlobalTidy.m_TidyVerilog = g_GlobalTidy.m_TidyNames[SYN_VERILOG].tidyName;
 				EndDialog(IDOK);
 			}
 			return TRUE;
@@ -106,7 +109,8 @@ INT_PTR CSetSheet::DoModalAllPage(BOOL bMainWnd /*= FALSE*/)
 	CSetPageBase pagePHP(_T("PHP"), _T("PHP"), g_GlobalTidy.m_TidyPhp);
 	CSetPageBase pageCSS(_T("CSS"), _T("CSS"), g_GlobalTidy.m_TidyCss);
 	CSetPageBase pageJson(_T("JSON"), _T("JSON"), g_GlobalTidy.m_TidyJson);
-	CSetPageBase pageSql(_T("SQL"), _T("SQL"), g_GlobalTidy.m_TidySql);
+    CSetPageBase pageSql(_T("SQL"), _T("SQL"), g_GlobalTidy.m_TidySql);
+    CSetPageBase pageVerilog(_T("Verilog"), _T("Verilog"), g_GlobalTidy.m_TidyVerilog);
 	AddPage(&pageCpp);
 	AddPage(&pageCs);
 	AddPage(&pageCSS);
@@ -117,7 +121,8 @@ INT_PTR CSetSheet::DoModalAllPage(BOOL bMainWnd /*= FALSE*/)
 	AddPage(&pageObjc);
 	AddPage(&pagePHP);
 	AddPage(&pageSql);
-	AddPage(&pageXml);
+    AddPage(&pageVerilog);
+    AddPage(&pageXml);
 
 	EnableVisualManagerStyle(TRUE, TRUE);
 
@@ -190,6 +195,10 @@ void CSetSheet::SaveTidyToReg()
 		{
 			bRegVaild = FALSE;
 		}
+        if (!reg.Write(g_GlobalTidy.m_TidyNames[SYN_VERILOG].langName, g_GlobalTidy.m_TidyVerilog))
+        {
+            bRegVaild = FALSE;
+        }
 	}
 	else
 	{

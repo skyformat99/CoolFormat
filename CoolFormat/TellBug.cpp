@@ -3,6 +3,7 @@
 
 #include "stdafx.h"
 #include "CoolFormat3.h"
+#include "GlobalUtils.h"
 #include "TellBug.h"
 
 //////////////////////////////////////////////////////////////////////////
@@ -33,8 +34,9 @@ END_MESSAGE_MAP()
 
 BOOL CTellBug::OnInitDialog()
 {
-	CBCGPDialog::OnInitDialog();
+    CBCGPDialog::OnInitDialog();
 
+    SendMessageToDescendants(WM_SETFONT, (WPARAM)globalData.fontRegular.m_hObject, MAKELPARAM(FALSE, 0), FALSE);
 	InitLang();
 	SetLinkBtn();
 
@@ -55,7 +57,7 @@ void CTellBug::SetLinkBtn()
 	m_btnLinkCsdn.SetURL(_T("http://blog.csdn.net/akof1314/article/details/5355948"));
 	m_btnLinkCsdn.SizeToContent();
 
-	m_btnLinkQQ.SetURL(_T("http://wpa.qq.com/msgrd?v=3&uin=307458053&site=qq&menu=yes"));
+	m_btnLinkQQ.SetURL(_T("https://github.com/akof1314/CoolFormat/issues"));
 	m_btnLinkQQ.SizeToContent();
 }
 
@@ -77,18 +79,22 @@ void CTellBug::InitLang()
 	bNameVaild = strTemp.LoadString(IDC_STATIC_TELLBUG_TIJIAO);
 	ASSERT(bNameVaild);
 	SetDlgItemText(IDC_STATIC_TELLBUG_TIJIAO, strTemp);
+	SetDlgItemSizeToContent(GetDlgItem(IDC_STATIC_TELLBUG_TIJIAO));
 
 	bNameVaild = strTemp.LoadString(IDC_STATIC_EMAIL);
 	ASSERT(bNameVaild);
 	SetDlgItemText(IDC_STATIC_EMAIL, strTemp);
+	SetDlgItemSizeToContent(GetDlgItem(IDC_STATIC_EMAIL));
 
 	bNameVaild = strTemp.LoadString(IDC_STATIC_CSDN);
 	ASSERT(bNameVaild);
 	SetDlgItemText(IDC_STATIC_CSDN, strTemp);
+	SetDlgItemSizeToContent(GetDlgItem(IDC_STATIC_CSDN));
 
 	bNameVaild = strTemp.LoadString(IDC_STATIC_QQ);
 	ASSERT(bNameVaild);
 	SetDlgItemText(IDC_STATIC_QQ, strTemp);
+	SetDlgItemSizeToContent(GetDlgItem(IDC_STATIC_QQ));
 
 	bNameVaild = strTemp.LoadString(IDS_EMAIL_TIP);
 	ASSERT(bNameVaild);
@@ -98,7 +104,7 @@ void CTellBug::InitLang()
 	ASSERT(bNameVaild);
 	m_btnLinkCsdn.SetTooltip(strTemp);
 
-	bNameVaild = strTemp.LoadString(IDS_QQ_TIP);
+    bNameVaild = strTemp.LoadString(IDS_CSDN_TIP);
 	ASSERT(bNameVaild);
 	m_btnLinkQQ.SetTooltip(strTemp);
 }
